@@ -1,0 +1,8 @@
+import sys
+
+a = sys.version
+
+print(a)
+
+# Output: 
+# '3.12.0 (tags/v3.12.0:0fb18b0, Oct  2 2023, 13:03:39) [MSC v.1935 64 bit (AMD64)]'
