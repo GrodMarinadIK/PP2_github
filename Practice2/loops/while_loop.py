@@ -11,6 +11,7 @@ while k < 5:
 print()
 
 # you could write inside while loop code that belongs to loop-block:
+# and also you could use structure while-else
 i = 1
 while i < 5:
     print(f"i now is = {i}")
