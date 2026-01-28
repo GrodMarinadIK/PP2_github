@@ -18,6 +18,6 @@ c = -23 - 2j        # complex, just negative
 
 # float scientific:
 
-t = 35e3
-t2 = 12E4
-t3 = -87.7e100
+t = 35e3            # = 35 * 10^{3}
+t2 = 12E4           # = 12 * 10^{4}
+t3 = -87.7e100      # = -87.7 * 10^{100}
