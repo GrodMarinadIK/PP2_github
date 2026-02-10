@@ -8,7 +8,7 @@ Educational program: Computer Systems and Software
 
 General structure is:
 ```
-PP2/
+PP2_github/
 ├── Practice1/
 │   ├── README.md
 │   └── ...
