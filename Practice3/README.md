@@ -1,5 +1,4 @@
-# Practice 3: Python Functions and OOP Fundamentals
-
+# Practice 3: Python Functions and Object-Oriented Programming
 
 The structure of a Practice3 folder
 
