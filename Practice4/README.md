@@ -1,6 +1,6 @@
 # 🔗 Practice 4: Python Advanced Topics - Iterators, Modules, Dates, Math, and JSON
 
-The structure of a Practice3 folder:
+The structure of a Practice4 folder:
 
 ```
 Practice4/
