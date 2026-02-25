@@ -18,7 +18,7 @@ print("-" * 50, "-" * 20, "-" * 7, "-" * 6)
 
 # Working with JSON data (sample-data.json)
 # The data is inside data['imdata'] which is a list
-for item in data["imdata"]:
+for item in data["imdata"]: # if we want first three [:3] --- using slicing 
     # Navigating the nested structure: l1PhysIf -> attributes
     attrs = item["l1PhysIf"]["attributes"]
     
@@ -31,5 +31,5 @@ for item in data["imdata"]:
     print(f"{dn:<50} {descr:<20} {speed:<7} {mtu:<6}")
 
 # Writing JSON Files (Saving the parsed data to a new file)
-with open("Practice4\json\parsed_output.json", "w") as outfile:
-    json.dump(data, outfile, indent=4)
+# with open("Practice4\exercises\parsed_output.json", "w") as outfile:
+#     json.dump(data, outfile, indent=4)
