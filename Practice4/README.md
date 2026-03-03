@@ -9,7 +9,6 @@ Practice4/
 │   ├── generators.py
 │   ├── json.py
 │   ├── math.py
-│   ├── parsed_output.json
 │   └── sample-data.json
 └── README.md(this file)
 ```
