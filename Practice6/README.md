@@ -2,6 +2,7 @@
 
 General structure for Practice 6:
 
+```
 Practice6/
 ├── builtin_functions/
 │   ├── enumerate_zip_examples.py
@@ -14,3 +15,4 @@ Practice6/
 │   ├── read_files.py
 │   └── write_files.py
 └── README.md
+```
