@@ -1,22 +1,25 @@
-from functools import reduce
+# enumerate_zip_examples.py
 
-def process_numbers(data):
-    # map: transform every element
-    doubled = list(map(lambda x: x * 2, data))
-    
-    # filter: remove elements that don't match criteria
-    greater_than_10 = list(filter(lambda x: x > 10, doubled))
-    
-    # reduce: aggregate all into one value
-    total = reduce(lambda x, y: x + y, greater_than_10)
-    
-    return total
+def show_zip_and_enumerate():
+    names = ["GrodMarinad2k", "Dizzy", "Lion"]
+    cities = ["Almaty", "Moscow", "Innopolis"]
+    scores = [100, 85, 90]
 
-def get_stats(data):
-    # Built-in math functions: min, max, sum, len
-    return {
-        "min": min(data),
-        "max": max(data),
-        "sum": sum(data),
-        "len": len(data)
-    }
+    print("--- Использование zip ---")
+    # Склеиваем три списка в один поток кортежей
+    combined = zip(names, cities, scores)
+    for name, city, score in combined:
+        print(f"Юзер {name} живет в {city} и набрал {score} баллов.")
+
+    print("\n--- Использование enumerate ---")
+    # Даем каждому юзеру порядковый номер (ранг)
+    for index, name in enumerate(names, start=1):
+        print(f"Место №{index}: {name}")
+
+    print("\n--- Комбо: enumerate + zip ---")
+    # Идеально для формирования таблиц
+    for i, (name, city) in enumerate(zip(names, cities), 1):
+        print(f"{i}. {name} (Локация: {city})")
+
+if __name__ == "__main__":
+    show_zip_and_enumerate()

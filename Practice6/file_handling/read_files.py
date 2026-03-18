@@ -1,29 +1,24 @@
-def read_file_line_by_line(filename):
-    """
-    Reads a file line-by-line. 
-    This is the safest way to read large files 
-    without crashing your computer's RAM.
-    """
+# read_files.py
+
+def read_line_by_line(filename):
+    """Построчное чтение (лучшее для больших файлов)"""
     try:
         with open(filename, "r", encoding="utf-8") as f:
             for line in f:
-                # .strip() removes the '\n' (newline character) 
-                # so your output doesn't have extra blank lines.
                 print(line.strip())
     except FileNotFoundError:
-        print(f"Error: The file '{filename}' was not found.")
+        print("Файл не найден.")
 
-def read_small_file_all_at_once(filename):
-    """
-    Reads the entire file into memory. 
-    Only use this for small config files or short notes.
-    """
+def read_methods_demo(filename):
+    """Демонстрация других методов чтения"""
     try:
         with open(filename, "r", encoding="utf-8") as f:
-            content = f.read()
-            print(content)
+            # 1. readline() — читает ОДНУ строку
+            first_line = f.readline() 
+            print(f"Первая строка: {first_line.strip()}")
+            
+            # 2. readlines() — читает всё оставшееся и делает СПИСОК строк
+            remaining_lines = f.readlines()
+            print(f"Осталось строк: {len(remaining_lines)}")
     except FileNotFoundError:
-        print(f"Error: The file '{filename}' was not found.")
-
-# Usage:
-# read_file_line_by_line("data.txt")
+        print("Файл не найден.")

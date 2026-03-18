@@ -1,19 +1,29 @@
-import shutil
 import os
+import shutil
 
-def move_my_file(source_file, target_folder):
-    """
-    Moves a file from one place to another.
-    We use os.path.join to build the path correctly for any OS (Win/Linux/Mac).
-    """
-    # Make sure the target folder exists first
-    os.makedirs(target_folder, exist_ok=True)
+def handle_files(source, target_dir):
+    # 1. Подготовка места 
+    os.makedirs(target_dir, exist_ok=True)
     
-    # Construct the destination path: target_folder + source_file
-    destination = os.path.join(target_folder, os.path.basename(source_file))
-    
-    try:
-        shutil.move(source_file, destination)
-        print(f"Moved '{source_file}' to '{destination}'")
-    except FileNotFoundError:
-        print(f"Error: The file '{source_file}' was not found.")
+    # Конструируем путь
+    destination = os.path.join(target_dir, os.path.basename(source))
+
+    # 2. shutil.move() — Перемещение или переименование
+    if os.path.exists(source):
+        shutil.move(source, destination)
+        print(f"Файл улетел в: {destination}")
+    else:
+        print("Источник не найден!")
+
+def heavy_cleanup(folder):
+    # 3. shutil.rmtree() — Рекурсивное удаление
+    # В отличие от os.rmdir, этот снесет папку, даже если в ней миллион файлов
+    if os.path.exists(folder):
+        shutil.rmtree(folder)
+        print(f"Папка {folder} и всё её содержимое стерты в порошок.")
+
+if __name__ == "__main__":
+    # Пример: перемещаем какой-нибудь лог в архив
+    # handle_files("test.txt", "archive")
+    # heavy_cleanup("data")
+    pass
