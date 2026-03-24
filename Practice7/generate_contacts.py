@@ -1,3 +1,4 @@
+# generate_contacts.py
 import random
 import csv
 import os
@@ -13,16 +14,16 @@ names = [
 def generate_fake_csv(filename, count=15):
     with open(filename, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
-        writer.writerow(["name", "phone"]) # Заголовок
+        writer.writerow(["name", "phone"]) # Headline
         
         for i in range(count):
             name = names[i] if i < len(names) else f"User_{i}"
-            # Генерируем рандомную часть из 9 цифр (типа 707 123 45 67)
+            # Generating random part cosisting of 9 digits (like 707 123 45 67)
             random_part = "".join([str(random.randint(0, 9)) for _ in range(9)])
             phone = "+7" + random_part
             writer.writerow([name, phone])
             
-    print(f"Файл {filename} на {count} контактов готов!")
+    print(f"File {filename} for {count} contacts created!")
 
 if __name__ == "__main__":
     generate_fake_csv(path_to_csv)

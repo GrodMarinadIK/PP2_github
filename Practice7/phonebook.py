@@ -1,3 +1,5 @@
+# phonebook.py
+
 import psycopg2
 import csv
 import os
@@ -70,7 +72,7 @@ def delete_contact(target):
 
 if __name__ == "__main__":
     create_table()
-    # Тут можно вызвать любую функцию для проверки
+    # It's the place for checking any function
     print("База готова к работе!")
     current_dir = os.path.dirname(__file__)
     path_to_csv = os.path.join(current_dir, "contacts.csv")
