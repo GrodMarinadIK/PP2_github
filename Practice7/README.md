@@ -1,5 +1,5 @@
 # Practice 7: PostgreSQL Phonebook
-Приложение для управления контактами. Данные хранятся в БД. Application for contact management. Data stored in D
+Application for contact management. Data stored in DB
 
 ```
 Practice7/
@@ -12,5 +12,5 @@ Practice7/
 └── README.md
 ```
 
-### Скриншот работы базы:
+### Screenshot of working DB:
 ![Database Screenshot](./db_result.png)
