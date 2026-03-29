@@ -8,10 +8,10 @@ path_to_csv = os.path.join(current_dir, "contacts.csv")
 
 names = [
     "Jiwoo", "Bae", "Charles", "Max", "Gabriella", "Nico", "Billy", 
-    "Jisu", "Minjeong", "Aeri", "Kyoko", "Izumi", "Umai", "Aya", "Jeongyeon"
+    "Jisu", "Minjeong", "Aeri", "Kyoko", "Izumi", "Umai", "Aya", "Jeongyeon", "Beeji"
 ]
 
-def generate_fake_csv(filename, count=15):
+def generate_fake_csv(filename, count=len(names)):
     with open(filename, 'w', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         writer.writerow(["name", "phone"]) # Headline
