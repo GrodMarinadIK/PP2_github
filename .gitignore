@@ -4,7 +4,12 @@ __pycache__/
 
 # VS Code settings
 .vscode/
+.idea/
 
 # Environments (if you ever use venv)
 venv/
 .env
+
+# System files
+.DS_Store
+Thumbs.db

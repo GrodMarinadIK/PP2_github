@@ -32,6 +32,9 @@ def bulk_insert(names, phones):
     if conn:
         cur = conn.cursor()
         cur.execute("CALL insert_many_contacts(%s, %s)", (names, phones))
+        for notice in conn.notices:
+            print(notice) # "Skipping invalid phone: 123"
+            
         conn.commit()
         print("\nМассовая вставка завершена.")
         cur.close()
@@ -57,7 +60,8 @@ def delete_contact(target):
         cur = conn.cursor()
         cur.execute("CALL delete_contact_v2(%s)", (target,))
         conn.commit()
-        print(f"\nКонтакт '{target}' удален через процедуру.")
+        for notice in conn.notices:
+            print(notice) # "Skipping invalid phone: 123"
         cur.close()
         conn.close()
 
@@ -65,16 +69,18 @@ if __name__ == "__main__":
     # Тестируем всё по очереди:
     
     # Поиск
-    search_contacts("Ji") 
+    search_contacts("+") 
     
     # Upsert (создаем нового или меняем Bae)
-    upsert_contact("Bae", "+70001112233")
+    upsert_contact("Bae", "+77777777777")
     
     # Пагинация: берем первые 18 записей
-    get_paged_contacts(20, 0)
+    get_paged_contacts(5, 10)
     
     # Массовая вставка (валидация: короткий номер отлетит)
     bulk_insert(["Godjo", "Engin", "Beijin"], ["+71234567890", "123", "+77411459652"]) # "123" не пройдет валидацию
     
     # Удаление
-    # delete_contact("Charles")
+    delete_contact("jfhwihjfhfjwfhwefhwjef")
+    # Возвращение
+    # upsert_contact("Charles","+7806824280")

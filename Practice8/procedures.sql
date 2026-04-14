@@ -21,6 +21,13 @@ BEGIN
         IF length(p_phones[i]) >= 10 THEN
             INSERT INTO phonebook(name, phone) VALUES(p_names[i], p_phones[i])
             ON CONFLICT (phone) DO NOTHING;
+
+        -- Вариант с нормальной проверкой (RegEx)
+        -- IF p_phones[i] ~ '^\+?[0-9]{10,15}$' THEN
+        -- INSERT INTO phonebook(name, phone) VALUES(p_names[i], p_phones[i])
+        -- ON CONFLICT (phone) DO NOTHING;
+        -- Вставляем, если это цифры, возможно с + в начале, длиной от 10 до 15    
+        
         ELSE
             RAISE NOTICE 'Skipping invalid phone: %', p_phones[i];
         END IF;
@@ -32,6 +39,15 @@ $$;
 CREATE OR REPLACE PROCEDURE delete_contact_v2(p_target VARCHAR)
 LANGUAGE plpgsql AS $$
 BEGIN
-    DELETE FROM phonebook WHERE name = p_target OR phone = p_target;
+    -- Пытаемся удалить
+    DELETE FROM phonebook 
+    WHERE name = p_target OR phone = p_target;
+
+    -- Проверяем, затронула ли последняя команда хоть одну строку
+    IF FOUND THEN
+        RAISE NOTICE 'Контакт "%" успешно удален. Минус один, юху!', p_target;
+    ELSE
+        RAISE NOTICE 'Ошибка: Контакт "%" не найден. Некого удалять :3 ))', p_target;
+    END IF;
 END;
 $$;
