@@ -18,8 +18,9 @@ class MusicPlayer:
         self.current_track_index = 0
         
         # Initial volume setting
-        self.volume = 0.5
+        self.volume = 0.1
         pygame.mixer.music.set_volume(self.volume)
+        self.is_paused = False
         
     def shuffle_playlist(self):
         """
@@ -49,18 +50,24 @@ class MusicPlayer:
 
     def play(self):
         if self.playlist:
-            track_path = self.get_current_track_path()
-            pygame.mixer.music.load(track_path)
-            pygame.mixer.music.play()
+            if self.is_paused:
+                pygame.mixer.music.unpause()
+                self.is_paused = False
+            elif not pygame.mixer.music.get_busy():
+                track_path = self.get_current_track_path()
+                pygame.mixer.music.load(track_path)
+                pygame.mixer.music.play()
 
     def stop(self):
         if self.playlist:
-            pygame.mixer.music.stop()
+            pygame.mixer.music.pause()
+            self.is_paused = True
 
     def next_track(self):
-        """Switches to the next track with circular indexing."""
         self.current_track_index = (self.current_track_index + 1) % len(self.playlist)
-        self.play()
+        pygame.mixer.music.stop() # Останавливаем старый трек
+        self.is_paused = False    # Сбрасываем паузу, если она была
+        self.play()               # Теперь play() увидит, что ничего не занято, и загрузит новый трек
 
     def prev_track(self):
         """Switches to the previous track with circular indexing."""
