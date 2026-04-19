@@ -50,13 +50,17 @@ class MusicPlayer:
 
     def play(self):
         if self.playlist:
+            # Если мы на паузе И при этом трек не менялся
             if self.is_paused:
                 pygame.mixer.music.unpause()
                 self.is_paused = False
-            elif not pygame.mixer.music.get_busy():
+            else:
+                # В любой другой непонятной ситуации (старт, стоп, некст)
+                # Просто загружаем то, что сейчас в индексе
                 track_path = self.get_current_track_path()
                 pygame.mixer.music.load(track_path)
                 pygame.mixer.music.play()
+                self.is_paused = False
 
     def stop(self):
         if self.playlist:
@@ -65,11 +69,10 @@ class MusicPlayer:
 
     def next_track(self):
         self.current_track_index = (self.current_track_index + 1) % len(self.playlist)
-        pygame.mixer.music.stop() # Останавливаем старый трек
-        self.is_paused = False    # Сбрасываем паузу, если она была
-        self.play()               # Теперь play() увидит, что ничего не занято, и загрузит новый трек
+        self.is_paused = False # Обязательно сбрасываем, чтобы play() загрузил новый файл
+        self.play()
 
     def prev_track(self):
-        """Switches to the previous track with circular indexing."""
         self.current_track_index = (self.current_track_index - 1) % len(self.playlist)
+        self.is_paused = False # И тут тоже
         self.play()

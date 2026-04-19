@@ -3,7 +3,7 @@
 ### Structure:
 ```
 Practice8/
-├── config.py           # (copy from P7)
+├── config.py.example   # (copy from P7)
 ├── connect.py          # (copy from P7)
 ├── functions.sql       # CREATE FUNCTION
 ├── procedures.sql      # CREATE PROCEDURE
@@ -26,3 +26,6 @@ This practice extends the PhoneBook application by migrating the core CRUD (Crea
 - **Search Pattern ('Ji')**: Successfully retrieved 3 contacts (including substring matches like "Beeji").
 - **Validation Check**: User "Engin" with the phone number "123" was correctly rejected by the database logic.
 - **Bulk Insert**: Successfully processed multiple records in a single database call using arrays.
+
+### Technical Note
+The connect.py script is designed to securely import credentials from config.py. For security reasons, the actual config.py file is excluded from this repository via .gitignore.

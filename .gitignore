@@ -6,10 +6,21 @@ __pycache__/
 .vscode/
 .idea/
 
-# Environments (if you ever use venv)
+# IDE / Environment settings
 venv/
 .env
+.vscode/
+.idea/
 
 # System files
 .DS_Store
 Thumbs.db
+
+# Security: Sensitive database credentials
+config.py
+!config.py.example
+
+
+# Local Databases
+*.db
+*.sqlite3

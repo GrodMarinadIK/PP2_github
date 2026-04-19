@@ -1,0 +1,11 @@
+# config.py.example
+# Manual: 
+# 1. Copy this file and rename it to "config.py"
+# 2. Then insert your local PostgreSQL data beneath 
+
+params = {
+    "host": "localhost",
+    "database": "your_db_name", # Name of database that you created in pgAdmin/psql
+    "user": "postgres",         # Your user (usually it's postgres)
+    "password": "YOUR_PASSWORD" # Your password
+}
