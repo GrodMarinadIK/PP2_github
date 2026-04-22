@@ -13,7 +13,7 @@ pygame.mixer.init()
 DISPLAYSURF = pygame.display.set_mode((400,600))
 pygame.display.set_caption("Racer")
 FramePerSec = pygame.time.Clock()
-background = pygame.image.load("Practice10\\racer\\images\\AnimatedStreet.png")
+background = pygame.image.load("Practice11\\racer\\images\\AnimatedStreet.png")
 
 
 init_db()  # Initialize the database at the start of the game
@@ -37,7 +37,7 @@ all_sprites.add(P1)
 all_sprites.add(E1)
 all_sprites.add(C1)
 
-coin_render = pygame.image.load("Practice10\\racer\\images\\Coin.png")
+coin_render = pygame.image.load("Practice11\\racer\\images\\Coin.png")
 coin_render_scaled = pygame.transform.scale(coin_render, (25, 25))
 
 # Event for increasing speed 
@@ -45,7 +45,7 @@ INC_SPEED = pygame.USEREVENT + 1
 pygame.time.set_timer(INC_SPEED, 1000) # accelerate every 1 second
 
 # Загружаем фоновую музыку
-pygame.mixer.music.load("Practice10\\racer\\sounds\\background.mp3")
+pygame.mixer.music.load("Practice11\\racer\\sounds\\background.mp3")
 
 # Запускаем бесконечное воспроизведение (-1 значит зациклить)
 pygame.mixer.music.play(-1)
@@ -121,7 +121,7 @@ while True:
         DISPLAYSURF.fill(constants.RED)
         DISPLAYSURF.blit(game_over_text, (30, 250))
         pygame.display.update()
-        pygame.mixer.Sound("Practice10\\racer\\sounds\\crash.wav").play()
+        pygame.mixer.Sound("Practice11\\racer\\sounds\\crash.wav").play()
         time.sleep(2)
         print("GAME OVER!")
         nickname = get_input()

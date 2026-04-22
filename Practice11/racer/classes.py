@@ -6,7 +6,7 @@ import constants
 class Enemy(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
-        self.image = pygame.image.load("Practice10\\racer\\images\\Enemy.png")
+        self.image = pygame.image.load("Practice11\\racer\\images\\Enemy.png")
         self.rect = self.image.get_rect()
         self.rect.center = (random.randint(40, constants.SCREEN_WIDTH-40), 0) 
 
@@ -21,7 +21,7 @@ class Enemy(pygame.sprite.Sprite):
 class Player(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
-        self.image = pygame.image.load("Practice10\\racer\\images\\Player.png")
+        self.image = pygame.image.load("Practice11\\racer\\images\\Player.png")
         self.rect = self.image.get_rect()
         self.rect.center = (160, 520)
        
@@ -38,7 +38,7 @@ class Player(pygame.sprite.Sprite):
 class Coin(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__() 
-        self.image = pygame.image.load("Practice10\\racer\\images\\Coin.png")
+        self.image = pygame.image.load("Practice11\\racer\\images\\Coin.png")
         self.rect = self.image.get_rect()
         self.rect.center = (random.randint(40, constants.SCREEN_WIDTH-40), 0) 
 
