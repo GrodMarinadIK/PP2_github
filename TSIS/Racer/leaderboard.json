@@ -1,0 +1,62 @@
+[
+    {
+        "name": "POP",
+        "score": 980,
+        "distance": 233,
+        "coins": 74
+    },
+    {
+        "name": "\u0410\u0426\u0423",
+        "score": 810,
+        "distance": 257,
+        "coins": 81
+    },
+    {
+        "name": "\u0410\u0410\u0426",
+        "score": 770,
+        "distance": 148,
+        "coins": 77
+    },
+    {
+        "name": "FWF",
+        "score": 770,
+        "distance": 113,
+        "coins": 77
+    },
+    {
+        "name": "FFW",
+        "score": 590,
+        "distance": 107,
+        "coins": 12
+    },
+    {
+        "name": "\u0410\u0426\u0410",
+        "score": 300,
+        "distance": 79,
+        "coins": 30
+    },
+    {
+        "name": "FFF",
+        "score": 290,
+        "distance": 82,
+        "coins": 29
+    },
+    {
+        "name": "GUY",
+        "score": 250,
+        "distance": 112,
+        "coins": 25
+    },
+    {
+        "name": "\u0410\u0426\u0410",
+        "score": 230,
+        "distance": 106,
+        "coins": 23
+    },
+    {
+        "name": "BFN",
+        "score": 190,
+        "distance": 131,
+        "coins": 19
+    }
+]
