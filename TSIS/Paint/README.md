@@ -21,6 +21,7 @@ This project features a variety of geometric tools, custom drawing modes, and a 
 - Language: Python 3.10+
 - Library: pygame (Graphics and Event handling)
 - Algorithms: - Bresenham-like interpolation for smooth lines.
+    
     - Iterative Flood Fill for the paint bucket tool.
 
 ---
@@ -38,13 +39,13 @@ Paint/
 
 ### 🎮 How to Use
 
-| Controls          | ActionKey / Input             |
-| :---              | :---                          |
-| Draw              | Left Mouse Button (Hold)      |
-| Change Brush Size | 1 through 6                   |
-| Undo Last Action  | Ctrl + Z                      |
-| Save Image        | Ctrl + S                      |
-| Select Tool/Color | Click buttons in the top menu |
+| Action | Key / Input |
+| :--- | :--- |
+| **Draw** | Mouse Button (Hold) |
+| **Change Brush Size** | 1 through 6 |
+| **Undo Last Action** | `Ctrl + Z` |
+| **Save Image** | `Ctrl + S` |
+| **Select Tool/Color** | Click buttons in the top menu |
 
 ---
 
