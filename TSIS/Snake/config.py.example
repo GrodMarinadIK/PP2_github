@@ -1,0 +1,62 @@
+import pygame
+
+# Grid / window
+CELL = 20
+COLS, ROWS = 25, 25
+ARENA_W = COLS * CELL
+ARENA_H = ROWS * CELL
+
+PANEL_TOP = 80       # HUD panel height above arena
+PANEL_BOT = 0
+SIDE      = 20       # left/right padding
+
+WIN_W = ARENA_W + SIDE * 2
+WIN_H = ARENA_H + PANEL_TOP + PANEL_BOT
+
+FPS = 60
+INITIAL_SPEED = 7    # steps/second
+
+# Colors (dark theme)
+C_BG          = (12,  12,  18)
+C_PANEL       = (22,  22,  32)
+C_BORDER      = (60,  60,  90)
+C_GRID        = (28,  28,  40)
+C_TEXT        = (220, 220, 255)
+C_TEXT_DIM    = (120, 120, 160)
+C_ACCENT      = (80,  200, 120)   # green
+
+C_FOOD        = (220,  55,  70)   # red apple
+C_GOLD        = (255, 210,  40)   # gold apple
+C_POISON      = (120,  20, 140)   # purple
+
+C_PU_SPEED    = (255, 140,  30)   # orange  – speed boost
+C_PU_SLOW     = (40,  140, 220)   # blue    – slow motion
+C_PU_SHIELD   = (200, 200,  50)   # yellow  – shield
+
+C_OBSTACLE    = (80,  80, 100)
+
+C_SNAKE_HEAD  = (0,   240, 100)
+C_SNAKE_BODY  = (0,   180,  80)
+
+C_OVERLAY     = (0, 0, 0, 160)   # semi-transparent overlay
+
+# Food / powerup lifetimes (ms)
+GOLD_LIFETIME   = 6_000
+POISON_LIFETIME = 8_000
+PU_FIELD_TIME   = 8_000   # powerup disappears from field
+PU_EFFECT_TIME  = 5_000   # powerup effect on snake
+
+# Level
+FOOD_PER_LEVEL  = 5       # normal food eaten to level up
+SPEED_PER_LEVEL = 1       # extra steps/sec per level
+OBSTACLE_START  = 3       # obstacles appear from this level
+OBSTACLES_PER_LEVEL = 3   # new blocks each level-up
+
+# DB (PostgreSQL) — copy this file to config.py and fill in your credentials
+DB_CONFIG = dict(
+    host="localhost",
+    port=5432,
+    dbname="snake_db",
+    user="postgres",
+    password="YOUR_PASSWORD_HERE",
+)

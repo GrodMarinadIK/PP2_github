@@ -1,0 +1,146 @@
+[
+  {
+    "id": 8,
+    "name": "Jisu",
+    "last_name": "Choi",
+    "email": "jisu.choi@test.com",
+    "birthday": "1990-04-02",
+    "group": "Work",
+    "phones": "+7906100832 (home)"
+  },
+  {
+    "id": 7,
+    "name": "Billy",
+    "last_name": "Herrington",
+    "email": "billy.herrington@jyp.net",
+    "birthday": "1986-08-01",
+    "group": "Work",
+    "phones": "+7905245492 (mobile)"
+  },
+  {
+    "id": 11,
+    "name": "Kyoko",
+    "last_name": "Hori",
+    "email": "kyoko.hori@example.com",
+    "birthday": "1981-11-02",
+    "group": "Other",
+    "phones": "+7682821835 (mobile)"
+  },
+  {
+    "id": 2,
+    "name": "Bae",
+    "last_name": "Jinsol",
+    "email": "bae.jinsol@example.com",
+    "birthday": "1996-01-05",
+    "group": "Friend",
+    "phones": "+7500427423 (mobile)"
+  },
+  {
+    "id": 1,
+    "name": "Jiwoo",
+    "last_name": "Kim",
+    "email": "jiwoo.kim@anime.jp",
+    "birthday": "1980-12-11",
+    "group": "Other",
+    "phones": "+7952588443 (mobile)"
+  },
+  {
+    "id": 9,
+    "name": "Minjeong",
+    "last_name": "Kim",
+    "email": "minjeong.kim@demo.com",
+    "birthday": "1983-06-17",
+    "group": "Other",
+    "phones": "+7979903139 (mobile)"
+  },
+  {
+    "id": 3,
+    "name": "Charles",
+    "last_name": "Leclerc",
+    "email": "charles.leclerc@test.com",
+    "birthday": "2000-09-09",
+    "group": "Work",
+    "phones": "+7923952202 (home)"
+  },
+  {
+    "id": 16,
+    "name": "Beeji",
+    "last_name": "Lee",
+    "email": "beeji.lee@f1.com",
+    "birthday": "1988-03-26",
+    "group": "Friend",
+    "phones": "+7633437123 (mobile)"
+  },
+  {
+    "id": 12,
+    "name": "Izumi",
+    "last_name": "Miyamura",
+    "email": "izumi.miyamura@f1.com",
+    "birthday": "1982-05-04",
+    "group": "Colleague",
+    "phones": "+7521070818 (work)"
+  },
+  {
+    "id": 6,
+    "name": "Nico",
+    "last_name": "Nee",
+    "email": "nico.nee@example.com",
+    "birthday": "1996-11-11",
+    "group": "Friend",
+    "phones": "+7047812262 (mobile)"
+  },
+  {
+    "id": 5,
+    "name": "Gabriella",
+    "last_name": "Rossi",
+    "email": "gabriella.rossi@example.com",
+    "birthday": "1988-04-23",
+    "group": "Family",
+    "phones": "+7663860186 (mobile)"
+  },
+  {
+    "id": 14,
+    "name": "Aya",
+    "last_name": "Saito",
+    "email": "aya.saito@example.com",
+    "birthday": "1997-04-07",
+    "group": "Colleague",
+    "phones": "+7028167616 (home)"
+  },
+  {
+    "id": 13,
+    "name": "Umai",
+    "last_name": "Tanaka",
+    "email": "umai.tanaka@mail.com",
+    "birthday": "1996-03-02",
+    "group": "Colleague",
+    "phones": "+7182164946 (work)"
+  },
+  {
+    "id": 10,
+    "name": "Aeri",
+    "last_name": "Uchinaga",
+    "email": "aeri.uchinaga@jyp.net",
+    "birthday": "1982-10-03",
+    "group": "Colleague",
+    "phones": "+7222930846 (mobile)"
+  },
+  {
+    "id": 4,
+    "name": "Max",
+    "last_name": "Verstappen",
+    "email": "max.verstappen@demo.com",
+    "birthday": "1983-10-21",
+    "group": "Family",
+    "phones": "+7336407496 (home)"
+  },
+  {
+    "id": 15,
+    "name": "Jeongyeon",
+    "last_name": "Yoo",
+    "email": "jeongyeon.yoo@example.com",
+    "birthday": "1991-08-11",
+    "group": "Colleague",
+    "phones": "+7538461488 (mobile)"
+  }
+]
