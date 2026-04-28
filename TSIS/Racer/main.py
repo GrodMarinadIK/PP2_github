@@ -23,24 +23,53 @@ DIFF = {
 }
 
 # ── Динамический спавн ───────────────────────────────────────────────────────
-def get_max_objects(level):
-    if level < 20:    return 2
-    elif level < 50:  return 3
-    elif level < 100: return 4
-    else:             return 5
+# Лимиты объектов на экране одновременно
+MAX_ENEMIES   = 2   # врагов (растёт до 3 после уровня 50)
+MAX_OBSTACLES = 1   # препятствий всегда не больше 1
+MAX_COINS     = 2   # монет
 
 SPAWN_CHANCE = 0.02
 
+def get_max_enemies(level):
+    """До уровня 50 — максимум 2 врага, после — 3."""
+    return 3 if level >= 50 else 2
+
+def _free_lane(enemy_group, obstacle_group):
+    """
+    Возвращает True если хотя бы одна полоса из LANES
+    не занята объектом в нижней половине экрана (y > 200).
+    Это гарантирует игроку всегда есть куда свернуть.
+    """
+    occupied = set()
+    for obj in list(enemy_group) + list(obstacle_group):
+        if obj.rect.top > 200:   # объект уже виден на экране
+            for lane in LANES:
+                if abs(obj.rect.centerx - lane) < 60:
+                    occupied.add(lane)
+    return len(occupied) < len(LANES)   # хоть одна полоса свободна
+
 def update_spawn(level, enemy_group, obstacle_group, all_sprites, player):
-    max_obj = get_max_objects(level)
-    total   = len(enemy_group) + len(obstacle_group)
-    if total < max_obj and random.random() < SPAWN_CHANCE:
-        if random.random() < 0.6:
-            e = Enemy(player_rect=player.rect)   # реестр сам всё проверит
-            enemy_group.add(e); all_sprites.add(e)
-        else:
-            o = Obstacle(player_rect=player.rect)
-            obstacle_group.add(o); all_sprites.add(o)
+    max_enemies = get_max_enemies(level)
+
+    # Проверяем лимиты отдельно для врагов и препятствий
+    can_spawn_enemy    = len(enemy_group)    < max_enemies
+    can_spawn_obstacle = len(obstacle_group) < MAX_OBSTACLES
+
+    if not (can_spawn_enemy or can_spawn_obstacle):
+        return
+    if not random.random() < SPAWN_CHANCE:
+        return
+
+    # Не спавним если все полосы заняты в нижней части экрана
+    if not _free_lane(enemy_group, obstacle_group):
+        return
+
+    if can_spawn_enemy and (not can_spawn_obstacle or random.random() < 0.6):
+        e = Enemy(player_rect=player.rect)
+        enemy_group.add(e); all_sprites.add(e)
+    elif can_spawn_obstacle:
+        o = Obstacle(player_rect=player.rect)
+        obstacle_group.add(o); all_sprites.add(o)
 
 # ── Инициализация ────────────────────────────────────────────────────────────
 pygame.init()
@@ -181,7 +210,10 @@ def run_game(settings):
 
         # ── Спрайты ─────────────────────────────────────────────────────────
         for spr in all_sprites:
-            screen.blit(spr.image, spr.rect)
+            if hasattr(spr, 'draw_rect'):
+                screen.blit(spr.image, spr.draw_rect)
+            else:
+                screen.blit(spr.image, spr.rect)
 
         # ── HUD ─────────────────────────────────────────────────────────────
         for i in range(player.lives):
@@ -202,9 +234,10 @@ def run_game(settings):
                         (constants.SCREEN_WIDTH - 130, 30))
 
         if player.invincible_timer > 0 and int(player.invincible_timer * 10) % 2 == 0:
-            flash = pygame.Surface(player.rect.size, pygame.SRCALPHA)
+            flash = pygame.Surface(player.draw_rect.size, pygame.SRCALPHA)
             flash.fill((255, 255, 255, 80))
-            screen.blit(flash, player.rect)
+            screen.blit(flash, player.draw_rect)
+            
 
         pygame.display.flip()
 

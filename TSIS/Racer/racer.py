@@ -14,6 +14,9 @@ LANES = [
     constants.SCREEN_WIDTH // 2 + 133,
 ]
 
+# Минимальный зазор между объектами на одной полосе при спавне (в пикселях).
+_SPAWN_GAP = 400
+
 
 # ===========================================================================
 # RoadObject — базовый класс
@@ -34,46 +37,69 @@ class RoadObject(pygame.sprite.Sprite):
             RoadObject._registry.remove(self)
         super().kill()
 
-    # ── Временно́е окно ──────────────────────────────────────────────────────
+    # ── Хелперы ─────────────────────────────────────────────────────────────
 
     def _get_speed(self):
         """Переопределяется в подклассах."""
         return max(1, constants.SPEED)
 
-    def _time_to_y(self, y):
-        spd = self._get_speed()
-        if spd == 0:
-            return float('inf')
-        return (y - self.rect.centery) / spd
+    def _same_lane(self, other):
+        """True, если объекты перекрываются по X (т.е. на одной или соседней полосе)."""
+        half_self  = self.rect.width  // 2 + 8
+        half_other = other.rect.width // 2 + 8
+        return abs(self.rect.centerx - other.rect.centerx) < half_self + half_other
 
-    def _conflicts_with(self, other, time_threshold=1.5):
+    def _moving_same_direction(self, other):
         """
-        Конфликт = x-полосы перекрываются И оба окажутся
-        на одной высоте примерно одновременно.
+        True — оба едут вниз (скорость > 0 у обоих).
+        False — один из них встречный (oncoming enemy едет с той же скоростью
+                вниз по пикселям, но логически «встречный» — его мы не тормозим).
+        Используем знак скорости: все наши объекты двигаются вниз (+y),
+        поэтому проверяем, что оба не являются oncoming-enemy.
         """
-        # X-полосы перекрываются?
-        half_self  = self.rect.width  // 2 + 10
-        half_other = other.rect.width // 2 + 10
-        if abs(self.rect.centerx - other.rect.centerx) >= half_self + half_other:
-            return False   # разные полосы — всё ок
+        self_oncoming  = getattr(self,  'kind', None) == 'oncoming'
+        other_oncoming = getattr(other, 'kind', None) == 'oncoming'
+        # Конфликт «попутных» — оба не встречные
+        return not self_oncoming and not other_oncoming
 
-        # Проверяем несколько контрольных точек по высоте
-        for y in [50, 150, 250, 350, 450, 550]:
-            t_self  = self._time_to_y(y)
-            t_other = other._time_to_y(y)
-            # Оба ещё не проехали эту точку
-            if t_self > 0 and t_other > 0:
-                if abs(t_self - t_other) < time_threshold:
-                    return True
-        return False
+    # ── Проверка конфликта при спавне ───────────────────────────────────────
+
+    def _conflicts_with(self, other):
+        """
+        Конфликт при спавне: та же полоса + слишком близко по вертикали.
+
+        Буфер зависит от разницы скоростей:
+        - Если self быстрее other (self догонит other) → нужен больший зазор.
+        - Если self медленнее → зазор базовый (other сам уедет).
+        - Встречные объекты не конфликтуют между собой по-попутному,
+          но могут конфликтовать если стоят вплотную — даём базовый буфер.
+        """
+        if not self._same_lane(other):
+            return False
+
+        gap = _SPAWN_GAP  # базовый зазор
+
+        # Дополнительный буфер если self быстрее — он будет догонять other
+        speed_diff = self._get_speed() - other._get_speed()
+        if speed_diff > 0:
+            # За ~60 кадров (1 сек) self нагонит на speed_diff пикселей
+            gap += int(speed_diff * 60)
+
+        return abs(self.rect.centery - other.rect.centery) < gap
+
+    # ── Спавн ───────────────────────────────────────────────────────────────
 
     def _spawn(self, player_rect=None, lane=None, offset_y=None):
-        for _ in range(100):
+        available_lanes = LANES[:]
+        random.shuffle(available_lanes)
+
+        for attempt in range(100):
             if lane is not None:
                 x = lane
                 y = offset_y if offset_y is not None else random.randint(-400, -60)
             else:
-                x = random.randint(40, constants.SCREEN_WIDTH - 40)
+                # Спавн строго в одну из трёх полос — никакого хаоса по X
+                x = available_lanes[attempt % len(available_lanes)]
                 y = random.randint(-400, -60)
 
             self.rect.center = (x, y)
@@ -82,7 +108,7 @@ class RoadObject(pygame.sprite.Sprite):
             if player_rect and self.rect.colliderect(player_rect):
                 continue
 
-            # Временно́е окно против всех живых RoadObject-ов
+            # Пространственная проверка против всех живых RoadObject-ов
             if any(self._conflicts_with(o)
                    for o in RoadObject._registry if o is not self):
                 continue
@@ -90,7 +116,33 @@ class RoadObject(pygame.sprite.Sprite):
             return  # чистое место
 
         # Фолбэк — уходим далеко за экран
-        self.rect.center = (random.randint(40, constants.SCREEN_WIDTH - 40), -600)
+        self.rect.center = (available_lanes[0], -800)
+
+    # ── Адаптивная скорость в move (вызывается из подклассов) ───────────────
+
+    def _safe_speed(self):
+        """
+        Возвращает скорость с учётом объектов впереди на той же полосе.
+        «Впереди» = ниже по экрану (больший rect.top) и на расстоянии < 200px.
+        Тормозим до скорости ближайшего попутного объекта спереди.
+        """
+        my_speed = self._get_speed()
+        min_gap  = 130  # пикселей — минимальный зазор до объекта спереди
+
+        for o in RoadObject._registry:
+            if o is self:
+                continue
+            if not self._same_lane(o):
+                continue
+            if not self._moving_same_direction(o):
+                continue  # встречных не тормозим
+
+            gap = o.rect.top - self.rect.bottom  # расстояние спереди
+            if 0 < gap < min_gap:
+                # Притормаживаем, но не останавливаемся полностью
+                my_speed = min(my_speed, max(1, o._get_speed()))
+
+        return my_speed
 
 
 # ===========================================================================
@@ -127,7 +179,13 @@ class Enemy(RoadObject):
         return max(1, int(constants.SPEED * 0.55))
 
     def move(self):
-        self.rect.move_ip(0, self._get_speed())
+        # Встречные едут без торможения (они всё равно разлетаются)
+        if self.kind == 'oncoming':
+            speed = self._get_speed()
+        else:
+            speed = self._safe_speed()
+
+        self.rect.move_ip(0, speed)
         if self.rect.top > constants.SCREEN_HEIGHT:
             self._spawn()
 
@@ -146,8 +204,10 @@ class Player(pygame.sprite.Sprite):
         self.image = pygame.transform.scale(
             pygame.image.load(filepath).convert_alpha(), (50, 100)
         )
-        self.rect = self.image.get_rect()
+        self.draw_rect = self.image.get_rect()          # для отрисовки — полный размер
+        self.rect = self.draw_rect.inflate(-15, -10)    # хитбокс — уменьшенный
         self.rect.center = (constants.SCREEN_WIDTH // 2, 520)
+        self.draw_rect.center = self.rect.center        # синхронизируем центры
 
         self.lives            = 3
         self.shield_active    = False
@@ -162,6 +222,7 @@ class Player(pygame.sprite.Sprite):
             self.rect.move_ip(-speed, 0)
         if self.rect.right < constants.SCREEN_WIDTH and keys[pygame.K_RIGHT]:
             self.rect.move_ip(speed, 0)
+        self.draw_rect.center = self.rect.center # синхронизируем центры
 
     def update_timers(self, dt):
         if self.nitro_active:
@@ -317,6 +378,6 @@ class Obstacle(RoadObject):
         return max(1, int(constants.SPEED * 0.8))
 
     def move(self):
-        self.rect.move_ip(0, self._get_speed())
+        self.rect.move_ip(0, self._safe_speed())
         if self.rect.top > constants.SCREEN_HEIGHT:
             self._spawn()

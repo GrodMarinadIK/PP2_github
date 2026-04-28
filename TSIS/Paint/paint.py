@@ -74,6 +74,8 @@ def main():
                     
                 # Холст
                 if pos[1] > MENU_HEIGHT:
+                    if len(history) > 20: # Оставляем последние 20 шагов
+                        history.pop(0)    # Удаляем самый старый "скриншот"
                     history.append(canvas.copy())
                     if mode == 'fill':
                         flood_fill(canvas, canvas_pos[0], canvas_pos[1], color)

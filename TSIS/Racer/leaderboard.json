@@ -24,10 +24,22 @@
         "coins": 77
     },
     {
+        "name": "LOL",
+        "score": 630,
+        "distance": 146,
+        "coins": 63
+    },
+    {
         "name": "FFW",
         "score": 590,
         "distance": 107,
         "coins": 12
+    },
+    {
+        "name": "\u0410\u042c\u042f",
+        "score": 370,
+        "distance": 166,
+        "coins": 37
     },
     {
         "name": "\u0410\u0426\u0410",
@@ -46,17 +58,5 @@
         "score": 250,
         "distance": 112,
         "coins": 25
-    },
-    {
-        "name": "\u0410\u0426\u0410",
-        "score": 230,
-        "distance": 106,
-        "coins": 23
-    },
-    {
-        "name": "BFN",
-        "score": 190,
-        "distance": 131,
-        "coins": 19
     }
 ]
